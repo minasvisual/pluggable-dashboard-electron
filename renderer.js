@@ -63,13 +63,14 @@ document.getElementById('activate-plgs').addEventListener('click', async (e) => 
 // Create a menu that can be extended through plugins
 document.getElementById('extend-menu').addEventListener('click', async (e) => {
   // Get additional menu items from plugins, providing the desired parent item
-  const menuItems = await Promise.all(extensionPoints.execute('extend-menu', 'demo-parent-li'))
+  const menuItems = await Promise.all(extensionPoints.execute('extend-menu', 'demo-parent-li', { params: '???'} ))
   // Insert items based on the parent and text provide by the plugin
   menuItems.forEach(item => {
     const demoAnchor = document.createElement('a')
     demoAnchor.classList.add('nav-link')
-    demoAnchor.href = '#'
+    demoAnchor.href = item.href || '#'
     demoAnchor.innerText = item.text
+    demoAnchor.target = 'janela'
 
     const demoLi = document.createElement('li')
     demoLi.appendChild(demoAnchor)

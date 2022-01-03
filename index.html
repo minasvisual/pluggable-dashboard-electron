@@ -2,147 +2,187 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' plugin:; img-src https:;">
-  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self' plugin:">
+	<base href="./" />
+	<meta charset="UTF-8">
+	<!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' plugin:; img-src https:;">
+	<meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self' plugin:">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Plugin installer</title>
-  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Plugin installer</title>
+	<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 
-<body class="bg-light">
-  <div class="container my-5">
-    <div class="row row-cols-1 row-cols-lg-2 g-4">
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <h2 class="card-title">Manage plugin lifecycle</h2>
-          </div>
-          <div class="card-body border-top">
-            <form id="install-file">
-              <div class="row align-items-end">
-                <div class="col-8">
-                  <label class="form-label">Package file:
-                    <input type="file" name="plugin-file" class="form-control" />
-                  </label>
-                </div>
-                <div class="col-4 d-grid py-2">
-                  <button class="btn btn-primary">Install</button>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="card-body border-top">
-            <form id="uninstall-plg">
-              <div class="row align-items-end">
-                <div class="col-8">
-                  <label class="form-label">Package name:
-                    <input type="text" name="plugin-pkg" class="form-control" />
-                  </label>
-                </div>
-                <div class="col-4 d-grid py-2">
-                  <button class="btn btn-primary">Uninstall</button>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="card-body border-top">
-            <div class="row justify-content-end">
-              <div class="col-4 d-grid py-2">
-                <button class="btn btn-primary" id="update-plgs">Update plugins</button>
-              </div>
-            </div>
-          </div>
-          <div class="card-body border-top">
-            <div class="row justify-content-end">
-              <div class="col-4 d-grid py-2">
-                <button class="btn btn-primary" id="activate-plgs">Activate plugins</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <h2>Test Extension Points</h2>
-          </div>
-          <div class="card-body border-top">
-            <div class="row">
-              <h4>Parallel execution</h4>
-            </div>
-            <div class="row align-items-start">
-              <div class="col-8">
-                <p class="menu-title">Demo menu:</p>
-                <nav class="navbar navbar-light bg-light">
-                  <div class="container-fluid">
-                    <div class="navbar-collapse">
-                      <ul class="navbar-nav" id="demo-menu">
-                        <li class="nav-item dropdown">
-                          <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">parent item
-                          </a>
-                          <ul class="dropdown-menu" id="demo-parent-li"></ul>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </nav>
-              </div>
-              <div class="col-4 d-grid py-2">
-                <button class="btn btn-primary extend" id="extend-menu" disabled>Extend demo menu</button>
-              </div>
-            </div>
-          </div>
-          <div class="card-body border-top">
-            <div class="row">
-              <h4>Serial execution</h4>
-            </div>
-            <form id="calc-price">
-              <div class="row align-items-end">
-                <div class="col-8">
-                  <label class="form-label currency-box" for="price">Demo price:
-                  </label>
-                  <div class="input-group">
-                    <span class="input-group-text">€</span>
-                    <input type="number" step="0.01" name="price" class="form-control currency" />
-                  </div>
-                  <p>Cost: € <span id="demo-cost"></span></p>
-                </div>
-                <div class="col-4 d-grid py-2">
-                  <button class="btn btn-primary extend" disabled>Calculate cost</button>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="card-body border-top">
-            <div class="row">
-              <h4>Handover</h4>
-            </div>
-            <form id="display-img">
-              <div class="row align-items-end">
-                <div class="col-8">
-                  <label class="form-label">Image url:
-                    <input type="text" name="img-url" class="form-control" />
-                  </label>
-                </div>
-                <div class="col-4 d-grid py-2">
-                  <button class="btn btn-primary extend" disabled>Display image</button>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="card-body border-top" id="img-viewer"></div>
-        </div>
-      </div>
-    </div>
+<body class="bg-light row">  
 
-    <!-- You can also require other files to run in this process -->
-    <!-- <script src="./app/index.js" type="module"></script> -->
-    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./renderer.js" type="module"></script>
+			<div class="col-2">
+				<nav class="navbar navbar-light bg-light">
+					<div class="container-fluid">
+						<div class="navbar-collapse">
+							<ul class="navbar-nav" id="demo-menu">
+
+								<li class="nav-item dropdown">
+									<a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+										aria-expanded="false">parent item
+									</a>
+									<ul class="dropdown-menu" id="demo-parent-li"></ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+
+				<div class="col-4 d-grid py-2">
+					<button class="btn btn-primary extend" id="extend-menu" disabled>Extend demo menu</button>
+				</div>
+
+				<div class="col-4 d-grid py-2">
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						Config
+					</button>
+				</div>
+
+			</div>
+
+			<iframe class="col" id="janela" name="janela">Empty</iframe> 
+
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body container-fluid">
+						<nav>
+							<div class="nav nav-tabs" id="nav-tab" role="tablist">
+								<button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-plugins"
+									type="button" role="tab" aria-controls="nav-plugins" aria-selected="true">Home</button>
+								<button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+									type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
+								<button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+									type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
+							</div>
+						</nav>
+						<div class="col tab-content" id="nav-tabContent">
+							<div class="tab-pane fade show active" id="nav-plugins" role="tabpanel" aria-labelledby="nav-home-tab">
+								<div class="col">
+									<div class="card">
+										<div class="card-body">
+											<h2 class="card-title">Manage plugin lifecycle</h2>
+										</div>
+										<div class="card-body border-top">
+											<form id="install-file">
+												<div class="row align-items-end">
+													<div class="col-8">
+														<label class="form-label">Package file:
+															<input type="file" name="plugin-file" class="form-control" />
+														</label>
+													</div>
+													<div class="col-4 d-grid py-2">
+														<button class="btn btn-primary">Install</button>
+													</div>
+												</div>
+											</form>
+										</div>
+										<div class="card-body border-top">
+											<form id="uninstall-plg">
+												<div class="row align-items-end">
+													<div class="col-8">
+														<label class="form-label">Package name:
+															<input type="text" name="plugin-pkg" class="form-control" />
+														</label>
+													</div>
+													<div class="col-4 d-grid py-2">
+														<button class="btn btn-primary">Uninstall</button>
+													</div>
+												</div>
+											</form>
+										</div>
+										<div class="card-body border-top">
+											<div class="row justify-content-end">
+												<div class="col-4 d-grid py-2">
+													<button class="btn btn-primary" id="update-plgs">Update plugins</button>
+												</div>
+											</div>
+										</div>
+										<div class="card-body border-top">
+											<div class="row justify-content-end">
+												<div class="col-4 d-grid py-2">
+													<button class="btn btn-primary" id="activate-plgs">Activate plugins</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+								<div class="col">
+									<div class="card">
+										<div class="card-body">
+											<h2>Test Extension Points</h2>
+										</div>
+										<div class="card-body border-top">
+											<div class="row">
+												<h4>Parallel execution</h4>
+											</div>
+											<div class="row align-items-start">
+												<div class="col-8">
+													<p class="menu-title">Demo menu:</p>
+
+												</div>
+											</div>
+										</div>
+										<div class="card-body border-top">
+											<div class="row">
+												<h4>Serial execution</h4>
+											</div>
+											<form id="calc-price">
+												<div class="row align-items-end">
+													<div class="col-8">
+														<label class="form-label currency-box" for="price">Demo price:
+														</label>
+														<div class="input-group">
+															<span class="input-group-text">€</span>
+															<input type="number" step="0.01" name="price" class="form-control currency" />
+														</div>
+														<p>Cost: € <span id="demo-cost"></span></p>
+													</div>
+													<div class="col-4 d-grid py-2">
+														<button class="btn btn-primary extend" disabled>Calculate cost</button>
+													</div>
+												</div>
+											</form>
+										</div>
+										<div class="card-body border-top">
+											<div class="row">
+												<h4>Handover</h4>
+											</div>
+											<form id="display-img">
+												<div class="row align-items-end">
+													<div class="col-8">
+														<label class="form-label">Image url:
+															<input type="text" name="img-url" class="form-control" />
+														</label>
+													</div>
+													<div class="col-4 d-grid py-2">
+														<button class="btn btn-primary extend" disabled>Display image</button>
+													</div>
+												</div>
+											</form>
+										</div>
+										<div class="card-body border-top" id="img-viewer"></div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">Contact
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- You can also require other files to run in this process -->
+		<!-- <script src="./app/index.js" type="module"></script> -->
+		<script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="./renderer.js" type="module"></script>
 </body>
 
 </html>
